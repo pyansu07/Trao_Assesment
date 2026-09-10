@@ -5,11 +5,19 @@ import type { Kit } from "@/lib/types";
 import type { useKit } from "@/lib/useKit";
 import { AutoSaveField } from "@/components/AutoSaveField";
 import { StateBadge } from "@/components/kit/StateBadge";
+import { SectionHeader } from "@/components/kit/SectionHeader";
+import { Spinner } from "@/components/Spinner";
 
 interface Props {
   kit: Kit;
   controls: ReturnType<typeof useKit>;
 }
+
+const CONFIDENCE_STYLE: Record<string, string> = {
+  low: "bg-rose-100 text-rose-700",
+  medium: "bg-amber-100 text-amber-700",
+  high: "bg-emerald-100 text-emerald-700",
+};
 
 export function FlashcardsTab({ kit, controls }: Props) {
   const [adding, setAdding] = useState(false);
@@ -26,27 +34,47 @@ export function FlashcardsTab({ kit, controls }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="card flex flex-wrap items-center gap-2">
-        <p className="text-xs text-slate-500">
-          Regenerating replaces auto-generated cards; edited/pinned cards are kept.
-        </p>
-        <button
-          className="btn-secondary ml-auto text-xs"
-          disabled={controls.regenerateFlashcards.isPending}
-          onClick={() => controls.regenerateFlashcards.mutate(false)}
-        >
-          {controls.regenerateFlashcards.isPending ? "Regenerating..." : "Regenerate"}
-        </button>
-        <button className="btn-primary text-xs" onClick={() => setAdding((v) => !v)}>
-          {adding ? "Cancel" : "Add flashcard"}
-        </button>
+      <div className="card">
+        <SectionHeader
+          icon="Flashcards"
+          title="Flashcards"
+          subtitle="Regenerating replaces auto-generated cards; edited/pinned cards are kept."
+          actions={
+            <>
+              <button
+                className="btn-secondary text-xs"
+                disabled={controls.regenerateFlashcards.isPending}
+                onClick={() => controls.regenerateFlashcards.mutate(false)}
+              >
+                {controls.regenerateFlashcards.isPending && <Spinner className="h-3.5 w-3.5" />}
+                {controls.regenerateFlashcards.isPending ? "Regenerating..." : "Regenerate"}
+              </button>
+              <button className="btn-primary text-xs" onClick={() => setAdding((v) => !v)}>
+                {adding ? "Cancel" : "+ Add flashcard"}
+              </button>
+            </>
+          }
+        />
       </div>
 
       {adding && (
-        <div className="card space-y-2">
-          <textarea className="input" rows={2} placeholder="Front" value={front} onChange={(e) => setFront(e.target.value)} />
-          <textarea className="input" rows={2} placeholder="Back" value={back} onChange={(e) => setBack(e.target.value)} />
+        <div className="card animate-fade-in-up space-y-2">
+          <textarea
+            className="input resize-y"
+            rows={2}
+            placeholder="Front"
+            value={front}
+            onChange={(e) => setFront(e.target.value)}
+          />
+          <textarea
+            className="input resize-y"
+            rows={2}
+            placeholder="Back"
+            value={back}
+            onChange={(e) => setBack(e.target.value)}
+          />
           <button className="btn-primary text-xs" onClick={handleAdd} disabled={controls.addFlashcard.isPending}>
+            {controls.addFlashcard.isPending && <Spinner className="h-3.5 w-3.5" />}
             Add
           </button>
         </div>
@@ -58,18 +86,10 @@ export function FlashcardsTab({ kit, controls }: Props) {
         <div className="grid gap-3 sm:grid-cols-2">
           {kit.flashcards.map((f) => (
             <div key={f.id} className="card">
-              <div className="mb-2 flex items-center gap-2">
+              <div className="mb-3 flex flex-wrap items-center gap-2">
                 <StateBadge state={f.state} />
                 {f.practice.confidence && (
-                  <span
-                    className={`badge ${
-                      f.practice.confidence === "low"
-                        ? "bg-red-100 text-red-700"
-                        : f.practice.confidence === "medium"
-                          ? "bg-amber-100 text-amber-700"
-                          : "bg-green-100 text-green-700"
-                    }`}
-                  >
+                  <span className={`badge ${CONFIDENCE_STYLE[f.practice.confidence]}`}>
                     {f.practice.confidence} confidence
                   </span>
                 )}
@@ -92,7 +112,7 @@ export function FlashcardsTab({ kit, controls }: Props) {
                 onSave={(front) => controls.updateFlashcard.mutateAsync({ fid: f.id, patch: { front } })}
                 ariaLabel="Flashcard front"
               />
-              <label className="label mt-2">Back</label>
+              <label className="label mt-3">Back</label>
               <AutoSaveField
                 multiline
                 value={f.back}

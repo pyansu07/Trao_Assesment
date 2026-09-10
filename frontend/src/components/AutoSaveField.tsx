@@ -52,12 +52,18 @@ export function AutoSaveField({ value, onSave, multiline, className, ariaLabel, 
   }
 
   const Field = multiline ? "textarea" : "input";
+  const ringClass =
+    state === "error"
+      ? "border-rose-300 focus:border-rose-400 focus:ring-rose-100"
+      : state === "saving"
+        ? "border-brand-200"
+        : "";
 
   return (
     <div className="relative">
       <Field
         aria-label={ariaLabel}
-        className={className ?? "input"}
+        className={`${className ?? "input"} ${ringClass}`}
         value={local}
         rows={multiline ? 4 : undefined}
         onChange={(e) => handleChange(e.target.value)}
@@ -69,8 +75,16 @@ export function AutoSaveField({ value, onSave, multiline, className, ariaLabel, 
 
 function SaveIndicator({ state }: { state: SaveState }) {
   if (state === "idle") return null;
-  const label = { pending: "Editing...", saving: "Saving...", saved: "Saved", error: "Failed to save" }[state];
-  const color =
-    state === "error" ? "text-red-600" : state === "saved" ? "text-green-600" : "text-slate-400";
-  return <span className={`mt-1 block text-xs ${color}`}>{label}</span>;
+  const config = {
+    pending: { label: "Editing", dot: "bg-slate-300", text: "text-slate-400" },
+    saving: { label: "Saving", dot: "bg-brand-400 animate-pulse", text: "text-slate-400" },
+    saved: { label: "Saved", dot: "bg-emerald-500", text: "text-emerald-600" },
+    error: { label: "Failed to save", dot: "bg-rose-500", text: "text-rose-600" },
+  }[state];
+  return (
+    <span className={`mt-1 flex items-center gap-1.5 text-xs ${config.text}`}>
+      <span className={`h-1.5 w-1.5 rounded-full ${config.dot}`} />
+      {config.label}
+    </span>
+  );
 }

@@ -28,7 +28,16 @@ export function PracticeMode({ kit, controls }: Props) {
   const [revealed, setRevealed] = useState(false);
 
   if (kit.flashcards.length === 0) {
-    return <p className="card text-sm text-slate-500">Add some flashcards first to start practicing.</p>;
+    return (
+      <div className="card animate-fade-in-up flex flex-col items-center py-14 text-center">
+        <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-500">
+          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+            <path d="M5 8.5A1.5 1.5 0 0 1 6.5 7h11A1.5 1.5 0 0 1 19 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 17.5v-9Z" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+        </div>
+        <p className="text-sm text-slate-500">Add some flashcards first to start practicing.</p>
+      </div>
+    );
   }
 
   const card = queue[Math.min(index, queue.length - 1)];
@@ -42,10 +51,16 @@ export function PracticeMode({ kit, controls }: Props) {
 
   if (done) {
     return (
-      <div className="card text-center">
-        <p className="text-sm text-slate-700">You&apos;ve been through every flashcard this round.</p>
+      <div className="card animate-fade-in-up flex flex-col items-center py-14 text-center">
+        <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+            <path d="M4 10.5 8 14l8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <p className="text-sm font-medium text-slate-900">You&apos;ve been through every flashcard this round.</p>
+        <p className="mt-1 text-sm text-slate-500">Nice work &mdash; come back later and weak cards surface first.</p>
         <button
-          className="btn-primary mt-4"
+          className="btn-primary mt-5"
           onClick={() => {
             setIndex(0);
             setRevealed(false);
@@ -58,21 +73,39 @@ export function PracticeMode({ kit, controls }: Props) {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-4">
+    <div className="mx-auto max-w-lg animate-fade-in-up space-y-5">
       <div className="flex items-center justify-between text-xs text-slate-500">
-        <span>
+        <span className="font-medium">
           Card {index + 1} of {queue.length}
         </span>
-        <div className="h-1.5 w-32 overflow-hidden rounded-full bg-slate-200">
-          <div className="h-full bg-brand-500" style={{ width: `${((index + 1) / queue.length) * 100}%` }} />
+        <div className="h-1.5 w-32 overflow-hidden rounded-full bg-slate-100">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-brand-500 to-violet-500 transition-all duration-500 ease-out"
+            style={{ width: `${((index + 1) / queue.length) * 100}%` }}
+          />
         </div>
       </div>
 
-      <div className="card min-h-[220px]">
-        <p className="mb-4 text-xs uppercase tracking-wide text-slate-400">
-          {revealed ? "Answer" : "Question"}
-        </p>
-        <p className="text-base text-slate-900">{revealed ? card.back : card.front}</p>
+      <div className="[perspective:1200px]">
+        <button
+          type="button"
+          onClick={() => !revealed && setRevealed(true)}
+          className={`relative min-h-[240px] w-full rounded-2xl border border-slate-200/70 bg-white p-6 text-left shadow-card transition-transform duration-500 [transform-style:preserve-3d] ${
+            revealed ? "[transform:rotateY(180deg)]" : "cursor-pointer hover:shadow-card-hover"
+          }`}
+        >
+          {/* front */}
+          <div className="absolute inset-0 flex flex-col p-6 [backface-visibility:hidden]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-wide text-brand-500">Question</p>
+            <p className="flex-1 text-lg font-medium leading-relaxed text-slate-900">{card.front}</p>
+            <p className="mt-4 text-xs text-slate-400">Click to reveal the answer</p>
+          </div>
+          {/* back */}
+          <div className="absolute inset-0 flex flex-col p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+            <p className="mb-4 text-xs font-medium uppercase tracking-wide text-emerald-600">Answer</p>
+            <p className="flex-1 text-lg leading-relaxed text-slate-900">{card.back}</p>
+          </div>
+        </button>
       </div>
 
       {!revealed ? (
@@ -80,27 +113,27 @@ export function PracticeMode({ kit, controls }: Props) {
           Reveal answer
         </button>
       ) : (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid animate-fade-in grid-cols-3 gap-2">
           <button
-            className="btn bg-red-100 text-red-800 hover:bg-red-200"
+            className="btn bg-rose-50 text-rose-700 hover:bg-rose-100"
             disabled={controls.practiceFlashcard.isPending}
             onClick={() => handleConfidence("low")}
           >
-            Low confidence
+            Low
           </button>
           <button
-            className="btn bg-amber-100 text-amber-800 hover:bg-amber-200"
+            className="btn bg-amber-50 text-amber-700 hover:bg-amber-100"
             disabled={controls.practiceFlashcard.isPending}
             onClick={() => handleConfidence("medium")}
           >
             Medium
           </button>
           <button
-            className="btn bg-green-100 text-green-800 hover:bg-green-200"
+            className="btn bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
             disabled={controls.practiceFlashcard.isPending}
             onClick={() => handleConfidence("high")}
           >
-            High confidence
+            High
           </button>
         </div>
       )}

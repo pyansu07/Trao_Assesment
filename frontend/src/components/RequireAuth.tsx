@@ -3,6 +3,7 @@
 import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
+import { LoadingScreen } from "./LoadingScreen";
 
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
@@ -15,11 +16,7 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   }, [loading, user, router]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-sm text-slate-500">Loading...</p>
-      </div>
-    );
+    return <LoadingScreen label="Checking your session" />;
   }
 
   if (!user) return null;

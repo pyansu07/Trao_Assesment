@@ -4,6 +4,9 @@ import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth, ApiError } from "@/lib/AuthContext";
+import { AuthShell } from "@/components/AuthShell";
+import { Spinner } from "@/components/Spinner";
+import { useSlowLoadHint } from "@/lib/useSlowLoadHint";
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -12,6 +15,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const showColdStartHint = useSlowLoadHint(submitting, 3500);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -28,11 +32,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <div className="card w-full max-w-sm">
-        <h1 className="mb-1 text-lg font-semibold text-slate-900">Create an account</h1>
-        <p className="mb-4 text-sm text-slate-500">Start generating interview prep kits.</p>
-        <form onSubmit={handleSubmit} className="space-y-3">
+    <AuthShell>
+      <div className="card">
+        <h1 className="mb-1 text-xl font-semibold tracking-tight text-slate-900">Create an account</h1>
+        <p className="mb-6 text-sm text-slate-500">Start generating interview prep kits.</p>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="label" htmlFor="email">
               Email
@@ -45,6 +49,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
+              placeholder="you@example.com"
             />
           </div>
           <div>
@@ -60,25 +65,31 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="new-password"
+              placeholder="At least 8 characters"
             />
-            <p className="mt-1 text-xs text-slate-400">At least 8 characters.</p>
           </div>
           {error && (
-            <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+            <p role="alert" className="animate-fade-in rounded-lg bg-rose-50 px-3 py-2.5 text-sm text-rose-700">
               {error}
             </p>
           )}
           <button type="submit" disabled={submitting} className="btn-primary w-full">
+            {submitting && <Spinner className="h-4 w-4" light />}
             {submitting ? "Creating account..." : "Create account"}
           </button>
+          {showColdStartHint && (
+            <p className="animate-fade-in text-center text-xs text-slate-400">
+              First request after a while can take up to a minute &mdash; the free-tier backend is waking up.
+            </p>
+          )}
         </form>
-        <p className="mt-4 text-center text-sm text-slate-500">
+        <p className="mt-6 text-center text-sm text-slate-500">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-brand-600 hover:underline">
+          <Link href="/login" className="font-medium text-brand-600 hover:text-brand-700 hover:underline">
             Log in
           </Link>
         </p>
       </div>
-    </main>
+    </AuthShell>
   );
 }

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { RequireAuth } from "@/components/RequireAuth";
 import { Navbar } from "@/components/Navbar";
 import { GenerationProgress } from "@/components/GenerationProgress";
+import { Spinner } from "@/components/Spinner";
 import { api, ApiError } from "@/lib/api";
 
 function NewKitContent() {
@@ -35,11 +36,11 @@ function NewKitContent() {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       <main className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
-        <h1 className="mb-1 text-xl font-semibold text-slate-900">Create a new kit</h1>
-        <p className="mb-6 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Create a new kit</h1>
+        <p className="mb-6 mt-1 text-sm text-slate-500">
           Paste the job description, add the company&apos;s website, and choose how many days you have.{" "}
-          <Link href="/kits/batch" className="text-brand-600 hover:underline">
-            Preparing for several roles? Use batch upload.
+          <Link href="/kits/batch" className="font-medium text-brand-600 hover:underline">
+            Preparing for several roles? Use batch upload →
           </Link>
         </p>
 
@@ -50,7 +51,7 @@ function NewKitContent() {
             onFailed={(message) => setError(message)}
           />
         ) : (
-          <form onSubmit={handleSubmit} className="card space-y-4">
+          <form onSubmit={handleSubmit} className="card animate-fade-in-up space-y-5">
             <div>
               <label className="label" htmlFor="jd">
                 Job description
@@ -61,12 +62,12 @@ function NewKitContent() {
                 minLength={1}
                 maxLength={20000}
                 rows={10}
-                className="input"
+                className="input resize-y"
                 value={jd}
                 onChange={(e) => setJd(e.target.value)}
                 placeholder="Paste the full job description here..."
               />
-              <p className="mt-1 text-right text-xs text-slate-400">{jd.length}/20000</p>
+              <p className="mt-1 text-right text-xs text-slate-400">{jd.length.toLocaleString()}/20,000</p>
             </div>
             <div>
               <label className="label" htmlFor="companyUrl">
@@ -96,13 +97,15 @@ function NewKitContent() {
                 value={days}
                 onChange={(e) => setDays(Number(e.target.value))}
               />
+              <p className="mt-1 text-xs text-slate-400">Between 1 and 60 days.</p>
             </div>
             {error && (
-              <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+              <p role="alert" className="animate-fade-in rounded-lg bg-rose-50 px-3 py-2.5 text-sm text-rose-700">
                 {error}
               </p>
             )}
             <button type="submit" disabled={submitting} className="btn-primary w-full">
+              {submitting && <Spinner className="h-4 w-4" light />}
               {submitting ? "Starting generation..." : "Generate kit"}
             </button>
           </form>

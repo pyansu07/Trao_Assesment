@@ -4,6 +4,8 @@ import type { GenerationMeta, Kit } from "@/lib/types";
 import type { useKit } from "@/lib/useKit";
 import { AutoSaveField } from "@/components/AutoSaveField";
 import { StateBadge } from "@/components/kit/StateBadge";
+import { SectionHeader } from "@/components/kit/SectionHeader";
+import { Spinner } from "@/components/Spinner";
 
 interface Props {
   kit: Kit;
@@ -17,31 +19,35 @@ export function CompanyTab({ kit, controls, meta }: Props) {
   return (
     <div className="space-y-4">
       <div className="card">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-900">Company brief</h2>
-          <div className="flex items-center gap-2">
-            <StateBadge state={company_brief.state} />
-            <button
-              className="btn-secondary text-xs"
-              onClick={() => controls.pinCompanyBrief.mutate(company_brief.state !== "pinned")}
-            >
-              {company_brief.state === "pinned" ? "Unpin" : "Pin"}
-            </button>
-            <button
-              className="btn-secondary text-xs"
-              disabled={controls.regenerateCompanyBrief.isPending}
-              onClick={() => {
-                const force = company_brief.state !== "generated" ? confirm("This brief has been edited/pinned. Overwrite it with a freshly regenerated version?") : false;
-                if (company_brief.state !== "generated" && !force) return;
-                controls.regenerateCompanyBrief.mutate(force);
-              }}
-            >
-              {controls.regenerateCompanyBrief.isPending ? "Regenerating..." : "Regenerate"}
-            </button>
-          </div>
-        </div>
+        <SectionHeader
+          icon="Company"
+          title="Company brief"
+          actions={
+            <>
+              <StateBadge state={company_brief.state} />
+              <button
+                className="btn-secondary text-xs"
+                onClick={() => controls.pinCompanyBrief.mutate(company_brief.state !== "pinned")}
+              >
+                {company_brief.state === "pinned" ? "Unpin" : "Pin"}
+              </button>
+              <button
+                className="btn-secondary text-xs"
+                disabled={controls.regenerateCompanyBrief.isPending}
+                onClick={() => {
+                  const force = company_brief.state !== "generated" ? confirm("This brief has been edited/pinned. Overwrite it with a freshly regenerated version?") : false;
+                  if (company_brief.state !== "generated" && !force) return;
+                  controls.regenerateCompanyBrief.mutate(force);
+                }}
+              >
+                {controls.regenerateCompanyBrief.isPending && <Spinner className="h-3.5 w-3.5" />}
+                {controls.regenerateCompanyBrief.isPending ? "Regenerating..." : "Regenerate"}
+              </button>
+            </>
+          }
+        />
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div>
             <label className="label">Summary</label>
             <AutoSaveField
@@ -64,11 +70,11 @@ export function CompanyTab({ kit, controls, meta }: Props) {
           </div>
           {company_brief.sources.length > 0 && (
             <div>
-              <p className="label mb-1">Sources</p>
-              <ul className="space-y-1 text-xs text-brand-600">
+              <p className="label mb-1.5">Sources</p>
+              <ul className="space-y-1">
                 {company_brief.sources.map((src) => (
-                  <li key={src} className="truncate">
-                    <a href={src} target="_blank" rel="noreferrer" className="hover:underline">
+                  <li key={src} className="truncate text-xs">
+                    <a href={src} target="_blank" rel="noreferrer" className="text-brand-600 hover:underline">
                       {src}
                     </a>
                   </li>
@@ -80,8 +86,8 @@ export function CompanyTab({ kit, controls, meta }: Props) {
       </div>
 
       <div className="card">
-        <h2 className="mb-3 text-sm font-semibold text-slate-900">Research summary</h2>
-        <dl className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+        <SectionHeader icon="Coverage" title="Research summary" />
+        <dl className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-3">
           <div>
             <dt className="text-xs text-slate-400">Company URL</dt>
             <dd className="truncate">
@@ -92,38 +98,38 @@ export function CompanyTab({ kit, controls, meta }: Props) {
           </div>
           <div>
             <dt className="text-xs text-slate-400">Pages researched</dt>
-            <dd>{source.pages_used.length}</dd>
+            <dd className="font-medium text-slate-900">{source.pages_used.length}</dd>
           </div>
           <div>
             <dt className="text-xs text-slate-400">JD length</dt>
-            <dd>{source.jd_chars} characters</dd>
+            <dd className="font-medium text-slate-900">{source.jd_chars.toLocaleString()} characters</dd>
           </div>
           <div>
             <dt className="text-xs text-slate-400">Researched at</dt>
-            <dd>{new Date(source.researched_at).toLocaleString()}</dd>
+            <dd className="font-medium text-slate-900">{new Date(source.researched_at).toLocaleString()}</dd>
           </div>
         </dl>
         {source.pages_used.length === 0 && (
-          <p className="mt-3 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+          <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
             The company website could not be reached, so this brief is based on the job description alone.
           </p>
         )}
       </div>
 
       <div className="card">
-        <h2 className="mb-1 text-sm font-semibold text-slate-900">Public interview discussion</h2>
-        <p className="mb-3 text-xs text-slate-500">
-          Public search results about this company&apos;s interview process - used to inform company-fit
-          questions, not treated as confirmed fact.
-        </p>
+        <SectionHeader
+          icon="Questions"
+          title="Public interview discussion"
+          subtitle="Used to inform company-fit questions, not treated as confirmed fact."
+        />
         {meta?.interviewDiscussion?.found && meta.interviewDiscussion.results.length > 0 ? (
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {meta.interviewDiscussion.results.map((hit) => (
-              <li key={hit.url} className="text-sm">
+              <li key={hit.url} className="rounded-lg border border-slate-100 p-3 text-sm">
                 <a href={hit.url} target="_blank" rel="noreferrer" className="font-medium text-brand-600 hover:underline">
                   {hit.title}
                 </a>
-                <p className="text-xs text-slate-500">{hit.snippet}</p>
+                <p className="mt-1 text-xs text-slate-500">{hit.snippet}</p>
               </li>
             ))}
           </ul>
