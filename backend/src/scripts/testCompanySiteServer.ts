@@ -7,6 +7,12 @@ import http from "node:http";
 const PORT = Number(process.env.FIXTURE_PORT ?? 8099);
 
 const pages: Record<string, string> = {
+  "/robots.txt": `User-agent: *\nDisallow: /private\n`,
+
+  "/private": `<!DOCTYPE html><html><head><title>Private | Acme Robotics</title></head><body>
+    <p>This page is disallowed by robots.txt and must never be fetched by the crawler.</p>
+  </body></html>`,
+
   "/": `<!DOCTYPE html><html><head><title>Acme Robotics | Home</title></head><body>
     <nav>
       <a href="/about">About</a>
@@ -32,6 +38,7 @@ const pages: Record<string, string> = {
     system design and behavioural rounds, and a final team-fit conversation.</p>
     <a href="/careers/engineering">Engineering roles</a>
     <a href="/culture">Culture & handbook</a>
+    <a href="/private">Internal team handbook (robots.txt-disallowed - must not be fetched)</a>
   </body></html>`,
 
   "/careers/engineering": `<!DOCTYPE html><html><head><title>Engineering Roles | Acme Robotics</title></head><body>
@@ -55,7 +62,8 @@ const server = http.createServer((req, res) => {
     res.end("Not found");
     return;
   }
-  res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+  const contentType = path === "/robots.txt" ? "text/plain; charset=utf-8" : "text/html; charset=utf-8";
+  res.writeHead(200, { "Content-Type": contentType });
   res.end(body);
 });
 

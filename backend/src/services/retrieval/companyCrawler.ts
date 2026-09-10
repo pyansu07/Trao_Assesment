@@ -1,6 +1,7 @@
 import { safeFetchPage } from "./safeFetch.js";
 import { extractCleanText, extractLinks, extractTitle } from "./htmlParser.js";
 import { rankLinks } from "./linkRanker.js";
+import { isAllowedByRobots } from "./robotsPolicy.js";
 
 const MAX_PAGES_TO_FETCH = 4; // beyond the homepage itself
 
@@ -31,6 +32,11 @@ export async function crawlCompanySite(companyUrl: string): Promise<CrawlResult>
   const failures: CrawlFailure[] = [];
   const pagesUsed: CrawledPage[] = [];
 
+  if (!(await isAllowedByRobots(companyUrl))) {
+    failures.push({ url: companyUrl, reason: "Blocked by robots.txt" });
+    return { homepageFetched: false, pagesUsed, failures };
+  }
+
   let homepage;
   try {
     homepage = await safeFetchPage(companyUrl);
@@ -51,6 +57,10 @@ export async function crawlCompanySite(companyUrl: string): Promise<CrawlResult>
   const toFetch = ranked.slice(0, MAX_PAGES_TO_FETCH);
 
   for (const link of toFetch) {
+    if (!(await isAllowedByRobots(link.href))) {
+      failures.push({ url: link.href, reason: "Blocked by robots.txt" });
+      continue;
+    }
     try {
       const page = await safeFetchPage(link.href);
       pagesUsed.push({

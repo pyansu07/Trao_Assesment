@@ -179,14 +179,26 @@ on someone else's.
 3. Extract every `<a>` on that page, resolve to absolute URLs, dedupe.
 4. Rank those links by a **keyword-signal score** (see §9) - never a
    hard-coded path list.
-5. Fetch up to 4 of the highest-scoring links (each independently
-   SSRF-checked, retried, and failure-tolerant).
-6. Every page fetch that fails (timeout, 404, blocked, wrong content-type,
-   too large) is recorded in `failures[]` and skipped — it never aborts the
-   crawl or the pipeline. If the homepage itself fails, the crawl returns
-   zero pages and the company brief says so honestly instead of inventing
-   content.
-7. Separately, search DuckDuckGo's HTML endpoint for
+5. **Check `/robots.txt` on that host before fetching anything** -
+   `services/retrieval/robotsPolicy.ts` fetches and parses it (per-origin,
+   cached for the crawl), matching `User-agent` groups (our bot's name,
+   falling back to `*`) and `Disallow` prefixes. A missing/unreachable
+   robots.txt is treated as unrestricted (standard convention). This is a
+   deliberately simplified parser - prefix-based `Disallow` matching, no
+   `Allow`-precedence or wildcard expansion - documented here rather than
+   silently only handling the common case. Verified both by unit tests
+   (`robotsPolicy.test.ts`) and by a live fixture-site check: a page linked
+   with high-signal anchor text ("team handbook") that would otherwise rank
+   as a top crawl candidate is correctly skipped and recorded as
+   `"Blocked by robots.txt"` rather than fetched.
+6. Fetch up to 4 of the highest-scoring *allowed* links (each independently
+   SSRF-checked, robots-checked, retried, and failure-tolerant).
+7. Every page fetch that fails (timeout, 404, blocked, wrong content-type,
+   too large, or robots-disallowed) is recorded in `failures[]` and skipped
+   — it never aborts the crawl or the pipeline. If the homepage itself
+   fails, the crawl returns zero pages and the company brief says so
+   honestly instead of inventing content.
+8. Separately, search DuckDuckGo's HTML endpoint for
    `"<company> interview process questions experience"` and parse up to 5
    results (title/url/snippet). If nothing useful comes back, `found:false`
    is recorded and the pipeline continues - a missing hiring page or absent

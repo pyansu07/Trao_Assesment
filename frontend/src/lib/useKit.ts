@@ -68,6 +68,22 @@ export function useKit(id: string) {
   const reorderQuestions = useMutation({
     mutationFn: (orderedIds: string[]) =>
       api.post<{ kit: Kit }>(`/api/kits/${id}/questions/reorder`, { ordered_ids: orderedIds }),
+    // Optimistic: the drag-drop gesture already shows the new order visually,
+    // so the underlying data should reflect it immediately too, rather than
+    // snapping back until the round-trip completes. Rolled back on error.
+    onMutate: async (orderedIds: string[]) => {
+      await queryClient.cancelQueries({ queryKey: kitQueryKey(id) });
+      const previous = queryClient.getQueryData<{ kit: Kit; meta?: GenerationMeta }>(kitQueryKey(id));
+      if (previous) {
+        const byId = new Map(previous.kit.questions.map((q) => [q.id, q]));
+        const reordered = orderedIds.map((qid) => byId.get(qid)).filter((q): q is Kit["questions"][number] => Boolean(q));
+        queryClient.setQueryData(kitQueryKey(id), { ...previous, kit: { ...previous.kit, questions: reordered } });
+      }
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) queryClient.setQueryData(kitQueryKey(id), context.previous);
+    },
     onSuccess: (res) => setKit(res.kit),
   });
 

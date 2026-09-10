@@ -66,13 +66,25 @@ function KitDetailContent() {
         </div>
         {deleteError && <p className="mb-4 text-sm text-red-600">{deleteError}</p>}
 
-        <nav className="mb-6 flex flex-wrap gap-1 border-b border-slate-200" role="tablist">
-          {TABS.map((t) => (
+        <nav className="mb-6 flex flex-wrap gap-1 border-b border-slate-200" role="tablist" aria-label="Kit sections">
+          {TABS.map((t, index) => (
             <button
               key={t}
+              id={`tab-${t}`}
               role="tab"
               aria-selected={tab === t}
+              aria-controls={`tabpanel-${t}`}
+              tabIndex={tab === t ? 0 : -1}
               onClick={() => setTab(t)}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+                  e.preventDefault();
+                  const delta = e.key === "ArrowRight" ? 1 : -1;
+                  const next = TABS[(index + delta + TABS.length) % TABS.length];
+                  setTab(next);
+                  document.getElementById(`tab-${next}`)?.focus();
+                }
+              }}
               className={`px-3 py-2 text-sm font-medium ${
                 tab === t
                   ? "border-b-2 border-brand-600 text-brand-700"
@@ -84,13 +96,15 @@ function KitDetailContent() {
           ))}
         </nav>
 
-        {tab === "Company" && <CompanyTab kit={data} controls={kit} meta={meta} />}
-        {tab === "Role" && <RoleTab kit={data} />}
-        {tab === "Questions" && <QuestionsTab kit={data} controls={kit} />}
-        {tab === "Flashcards" && <FlashcardsTab kit={data} controls={kit} />}
-        {tab === "Schedule" && <ScheduleTab kit={data} controls={kit} />}
-        {tab === "Coverage" && <CoverageTab kit={data} />}
-        {tab === "Practice" && <PracticeMode kit={data} controls={kit} />}
+        <div id={`tabpanel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`} tabIndex={-1}>
+          {tab === "Company" && <CompanyTab kit={data} controls={kit} meta={meta} />}
+          {tab === "Role" && <RoleTab kit={data} />}
+          {tab === "Questions" && <QuestionsTab kit={data} controls={kit} />}
+          {tab === "Flashcards" && <FlashcardsTab kit={data} controls={kit} />}
+          {tab === "Schedule" && <ScheduleTab kit={data} controls={kit} />}
+          {tab === "Coverage" && <CoverageTab kit={data} />}
+          {tab === "Practice" && <PracticeMode kit={data} controls={kit} />}
+        </div>
       </main>
     </div>
   );
