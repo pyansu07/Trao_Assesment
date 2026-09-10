@@ -12,11 +12,24 @@ import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 export function createApp() {
   const app = express();
 
+  // FRONTEND_URL may be a comma-separated list (e.g. a stable production
+  // domain plus a custom domain) - trailing slashes are ignored so a
+  // copy-pasted URL with or without one still matches.
+  const allowedOrigins = env.FRONTEND_URL.split(",")
+    .map((origin) => origin.trim().replace(/\/$/, ""))
+    .filter(Boolean);
+
   app.disable("x-powered-by");
   app.use(helmet());
   app.use(
     cors({
-      origin: env.FRONTEND_URL,
+      origin(requestOrigin, callback) {
+        // no Origin header (curl, server-to-server, same-origin) - allow
+        if (!requestOrigin) return callback(null, true);
+        const normalized = requestOrigin.replace(/\/$/, "");
+        if (allowedOrigins.includes(normalized)) return callback(null, true);
+        callback(new Error(`Origin ${requestOrigin} is not allowed`));
+      },
       credentials: true,
     }),
   );
