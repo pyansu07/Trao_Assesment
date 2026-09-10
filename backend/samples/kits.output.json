@@ -1,0 +1,1472 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-09-10T12:32:39.637Z",
+  "kits": [
+    {
+      "id": "case-01-backend",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Acme Robotics",
+          "company_url": "http://localhost:8099/",
+          "role": "Backend Engineer",
+          "location": "",
+          "jd_chars": 828,
+          "researched_at": "2026-09-10T12:26:57.965Z",
+          "pages_used": [
+            "http://localhost:8099/",
+            "http://localhost:8099/careers",
+            "http://localhost:8099/about"
+          ]
+        },
+        "company_brief": {
+          "summary": "Founded in 2016 and distributed across three continents, Acme Robotics is a growing company that ships software updates weekly. They are currently hiring engineers who focus on robust, testable robotics software.",
+          "what_they_do": "Acme Robotics builds autonomous warehouse robots and designs perception and navigation software to help fulfillment centers operate faster and more safely.",
+          "sources": [
+            "http://localhost:8099/",
+            "http://localhost:8099/careers",
+            "http://localhost:8099/about"
+          ],
+          "state": "generated"
+        },
+        "role": {
+          "title": "Backend Engineer",
+          "seniority": "mid-level",
+          "responsibilities": [
+            "Design and operate services that coordinate robot fleets in real time",
+            "Build production backend services in Node.js or Go",
+            "Work with relational databases including schema design and query optimization",
+            "Mentor junior engineers and review code",
+            "Collaborate closely with robotics and infrastructure teams"
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "4+ years of experience building production backend services in Node.js or Go",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "Strong understanding of distributed systems, including retries, idempotency, and eventual consistency",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "Experience with PostgreSQL or another relational database, including schema design and query optimization",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r4",
+              "text": "Experience mentoring junior engineers and reviewing code thoughtfully",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r5",
+              "text": "Comfortable working in a distributed, mostly-async team",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r6",
+              "text": "Experience with Kubernetes or another container orchestration platform",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r7",
+              "text": "Prior experience in robotics or logistics software",
+              "kind": "domain",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "How do you handle asynchronous error handling and graceful shutdowns in a production Node.js or Go backend service?",
+            "answer_outline": "Discuss capturing uncaught exceptions and unhandled rejections. Explain stopping new incoming requests while finishing active ones. Mention closing database and message queue connections safely.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "Explain how you ensure idempotency in a distributed API when a client might retry a failed payment request multiple times due to a network timeout.",
+            "answer_outline": "Define idempotency keys and how they are stored (e.g., in PostgreSQL with unique constraints). Discuss checking the state of a transaction before processing. Explain returning the original cached response for duplicate requests.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "A slow-running query is causing connection pool exhaustion in your PostgreSQL database. Walk through your step-by-step process for diagnosing and optimizing it.",
+            "answer_outline": "Use EXPLAIN ANALYZE to identify sequential scans or missing indexes. Evaluate query structure, joins, and indexing strategies. Consider query rewrite, partitioning, or caching if necessary.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "technical",
+            "prompt": "How does a liveness probe differ from a readiness probe in Kubernetes, and why is configuring both properly critical for a backend service?",
+            "answer_outline": "Liveness probes restart containers when they are deadlocked or unhealthy. Readiness probes control traffic routing to pods during startup or temporary overloads. Preventing downtime and cascading failures in a cluster.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time you had to review a junior engineer's code that had significant issues. How did you provide feedback to help them grow while keeping the team's velocity on track?",
+            "answer_outline": "Explains how constructive and respectful feedback was delivered. Mentions balancing mentorship with maintaining code quality and timelines. Highlights the junior engineer's subsequent learning or improvement.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you share an experience where a project was delayed or misunderstood because of asynchronous communication in a distributed team? How did you resolve the ambiguity?",
+            "answer_outline": "Identifies the breakdown in asynchronous communication. Describes the proactive steps taken to clarify requirements or blockers. Outlines measures implemented to prevent similar issues in the future.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "Design a command-dispatching service for autonomous warehouse robots that must handle idempotent retries when network connectivity is intermittent. How would you handle state synchronization and eventual consistency between the cloud backend and the robots?",
+            "answer_outline": "Propose unique idempotency keys generated at the command source and tracked by the backend database. Explain how to use exponential backoff with jitter for retries to prevent network storms. Discuss how to handle eventual consistency using state versioning when robots operate offline and sync later.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "system-design",
+            "prompt": "A warehouse management service needs to track real-time inventory locations and historical robot paths using PostgreSQL. How would you design the schema and optimize queries for high-frequency updates and spatial-temporal range lookups?",
+            "answer_outline": "Design normalized tables for inventory and robot telemetry, utilizing appropriate indexes such as B-tree for IDs and spatial indexes for location data. Discuss strategies for write amplification reduction, partitioning high-volume tables by time, and managing connection pooling. Explain how to analyze query performance using EXPLAIN ANALYZE and identifying missing indexes.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r7"
+            ],
+            "category": "company-fit",
+            "prompt": "What drew you to apply to Acme Robotics, and how does your prior background connect to building software for autonomous warehouse robots and fulfillment centers?",
+            "answer_outline": "Demonstrates genuine interest in Acme Robotics' mission in the robotics and logistics space. Connects past industry experience or relevant domain knowledge to warehouse automation challenges. Highlights enthusiasm for working in a distributed, fast-paced team environment shipping weekly updates.",
+            "difficulty": 1,
+            "state": "generated"
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "How many years of backend production service experience in Node.js or Go are required?",
+            "back": "4+ years of experience.",
+            "requirement_ids": [
+              "r1"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f2",
+            "front": "What key distributed systems concepts must you understand well?",
+            "back": "Retries, idempotency, and eventual consistency.",
+            "requirement_ids": [
+              "r2"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f3",
+            "front": "What database expertise is expected for relational systems like PostgreSQL?",
+            "back": "Schema design and query optimization.",
+            "requirement_ids": [
+              "r3"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f4",
+            "front": "What expectations exist regarding team collaboration and leadership?",
+            "back": "Mentoring junior engineers and reviewing code thoughtfully.",
+            "requirement_ids": [
+              "r4"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f5",
+            "front": "What working environment style does the team utilize?",
+            "back": "A distributed, mostly-async team structure.",
+            "requirement_ids": [
+              "r5"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f6",
+            "front": "What container orchestration experience is nice to have?",
+            "back": "Experience with Kubernetes or another container orchestration platform.",
+            "requirement_ids": [
+              "r6"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f7",
+            "front": "What domain experience is considered a nice-to-have?",
+            "back": "Prior experience in robotics or logistics software.",
+            "requirement_ids": [
+              "r7"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          }
+        ],
+        "schedule": {
+          "days_available": 5,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Technical fundamentals & System design",
+              "question_ids": [
+                "q2",
+                "q7"
+              ],
+              "minutes": 60
+            },
+            {
+              "day": 2,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q1",
+                "q3"
+              ],
+              "minutes": 60
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural readiness",
+              "question_ids": [
+                "q5",
+                "q6"
+              ],
+              "minutes": 60
+            },
+            {
+              "day": 4,
+              "focus": "System design & Technical fundamentals",
+              "question_ids": [
+                "q8",
+                "q4"
+              ],
+              "minutes": 60
+            },
+            {
+              "day": 5,
+              "focus": "Company fit & culture",
+              "question_ids": [
+                "q9"
+              ],
+              "minutes": 40
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-02-frontend",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Careers",
+          "company_url": "http://localhost:8099/careers",
+          "role": "Frontend Engineer",
+          "location": "",
+          "jd_chars": 286,
+          "researched_at": "2026-09-10T12:27:51.580Z",
+          "pages_used": [
+            "http://localhost:8099/careers",
+            "http://localhost:8099/careers/engineering",
+            "http://localhost:8099/culture"
+          ]
+        },
+        "company_brief": {
+          "summary": "Acme Robotics is a distributed company that values mentorship, clear written communication, and asynchronous collaboration in small autonomous teams. They are currently hiring backend engineers with distributed systems experience and robotics engineers with ROS experience.",
+          "what_they_do": "Acme Robotics develops robotics software and builds engineering teams focused on robust, testable solutions.",
+          "sources": [
+            "http://localhost:8099/careers",
+            "http://localhost:8099/careers/engineering",
+            "http://localhost:8099/culture"
+          ],
+          "state": "generated"
+        },
+        "role": {
+          "title": "Frontend Engineer",
+          "seniority": "not specified",
+          "responsibilities": [
+            "Build internal operations dashboard using React and TypeScript",
+            "Work independently",
+            "Communicate clearly with designers and backend engineers",
+            "Build data-heavy UIs involving tables and charts"
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "React skills",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "TypeScript skills",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "Work independently",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r4",
+              "text": "Communicate clearly with designers and backend engineers",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r5",
+              "text": "Experience with data-heavy UIs (tables, charts)",
+              "kind": "technical",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "Explain how React's component lifecycle and reconciliation process work, and how you would optimize a component that re-renders too frequently.",
+            "answer_outline": "Discuss the Virtual DOM and diffing algorithm. Mention hooks like useMemo and useCallback to prevent unnecessary recalculations. Explain how to properly structure state to avoid cascade re-renders.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "How do TypeScript generics work, and can you provide an example of how you would use them to type a reusable component or utility function?",
+            "answer_outline": "Explain that generics allow creating reusable components that work with a variety of types rather than a single one. Provide a clear code example using type constraints or default types. Discuss how type inference works in practice with generics.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r1",
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "How do you approach typing props and state in a complex React component using TypeScript, particularly when dealing with union types or discriminated unions?",
+            "answer_outline": "Show how to define interfaces or type aliases for component props. Demonstrate the use of discriminated unions for state machines or mutually exclusive props. Explain how TypeScript narrows types automatically within JSX conditional checks.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "technical",
+            "prompt": "What strategies do you use to maintain high performance when rendering data-heavy UIs, such as large virtualized tables or complex real-time charts?",
+            "answer_outline": "Discuss virtual scrolling techniques to limit DOM node count for large tables. Explain debouncing or throttling high-frequency updates from real-time data streams. Mention canvas-based rendering or efficient SVG management for complex charts.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time when you were given a vague or high-level goal with minimal supervision. How did you break down the work and ensure you delivered results independently?",
+            "answer_outline": "Described how they scoped and prioritized the ambiguous task. Explained the steps taken to self-manage progress and unblock themselves. Highlighted the final outcome and how they validated their solution independently.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Describe a situation where you had to explain a complex technical constraint to a designer, or conversely, translate a UX requirement into technical constraints for a backend engineer. How did you ensure alignment?",
+            "answer_outline": "Identified the communication gap or conflicting priorities between teams. Used clear language or concrete examples to bridge understanding. Reached a successful compromise or shared technical plan without friction.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r3",
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a project where you were working autonomously on a feature that heavily relied on APIs or UI designs from others. How did you manage dependencies and keep communication clear while working largely on your own?",
+            "answer_outline": "Proactively identified dependencies and flagged potential blockers early. Established clear communication cadences or documentation for cross-functional partners. Balanced independent deep work with timely alignment updates.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r1",
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "How would you architect a complex, reusable component library in React using TypeScript that ensures strict type safety, predictable state management, and easy extensibility for other engineering teams?",
+            "answer_outline": "Define clear component interface contracts using TypeScript generics and discriminated unions. Establish a predictable compound component pattern to decouple layout from logic. Implement robust prop validation and documentation strategies.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r5",
+              "r1"
+            ],
+            "category": "system-design",
+            "prompt": "Design a high-performance frontend architecture for a real-time data dashboard that needs to render thousands of rows in a table and update multiple streaming charts simultaneously without UI freezing.",
+            "answer_outline": "Implement windowing or virtualized scrolling for large data tables to minimize DOM node count. Utilize optimized rendering strategies for high-frequency chart updates. Manage state efficiently using debouncing, throttling, or web workers to prevent main-thread bottlenecks.",
+            "difficulty": 3,
+            "state": "generated"
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "How do you ensure type safety in a large React codebase?",
+            "back": "By leveraging TypeScript interfaces/types for component props, state, and API responses, and avoiding 'any'.",
+            "requirement_ids": [
+              "r1",
+              "r2"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f2",
+            "front": "How do you approach solving a technical blocker when working independently?",
+            "back": "I thoroughly research documentation, analyze error logs, experiment with isolated prototypes, and consult team resources if needed.",
+            "requirement_ids": [
+              "r3"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f3",
+            "front": "What is your strategy for collaborating effectively with backend engineers?",
+            "back": "Agreeing on API contracts (e.g., OpenAPI/Swagger) early, aligning on data structures, and handling error states gracefully.",
+            "requirement_ids": [
+              "r4"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f4",
+            "front": "How do you bridge the gap between design specs and frontend implementation?",
+            "back": "I communicate proactively with designers to clarify edge cases, responsive behaviors, and design system constraints.",
+            "requirement_ids": [
+              "r4"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f5",
+            "front": "How do you optimize performance in data-heavy UIs with large tables or charts?",
+            "back": "By using virtualization (windowing), memoization, pagination, and efficient state management to prevent unnecessary re-renders.",
+            "requirement_ids": [
+              "r1",
+              "r5"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          }
+        ],
+        "schedule": {
+          "days_available": 3,
+          "days": [
+            {
+              "day": 1,
+              "focus": "System design & Behavioural readiness",
+              "question_ids": [
+                "q7",
+                "q8",
+                "q9"
+              ],
+              "minutes": 80
+            },
+            {
+              "day": 2,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q1",
+                "q2",
+                "q3"
+              ],
+              "minutes": 80
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural readiness & Technical fundamentals",
+              "question_ids": [
+                "q5",
+                "q6",
+                "q4"
+              ],
+              "minutes": 80
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-03-thin-jd",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "About",
+          "company_url": "http://localhost:8099/about",
+          "role": "Software Engineer",
+          "location": "",
+          "jd_chars": 50,
+          "researched_at": "2026-09-10T12:29:05.203Z",
+          "pages_used": [
+            "http://localhost:8099/about",
+            "http://localhost:8099/careers"
+          ]
+        },
+        "company_brief": {
+          "summary": "Founded in 2016, Acme Robotics is a distributed company with a team spread across three continents that ships updates weekly. They are actively hiring engineers who focus on robust and testable software.",
+          "what_they_do": "Acme Robotics designs perception and navigation software for warehouse robots.",
+          "sources": [
+            "http://localhost:8099/about",
+            "http://localhost:8099/careers"
+          ],
+          "state": "generated"
+        },
+        "role": {
+          "title": "Software Engineer",
+          "seniority": "not specified",
+          "responsibilities": [
+            "Write code using Python"
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "Python",
+              "kind": "technical",
+              "priority": "must"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "Explain the difference between deep copies and shallow copies in Python, and provide a scenario where using the wrong one could lead to a subtle bug in a robotics application.",
+            "answer_outline": "Shallow copies duplicate the outer container while maintaining references to inner objects. Deep copies recursively duplicate all nested objects. In a robotics application sharing sensor configuration structures, modifying a nested parameter in a shallow copy can inadvertently mutate the original source data, leading to erratic robot navigation behavior.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "system-design",
+            "prompt": "How would you design a distributed telemetry and logging aggregation system in Python to handle high-frequency sensor and state data streams from multiple warehouse robots operating concurrently?",
+            "answer_outline": "Propose a message broker architecture like Kafka or MQTT for telemetry ingest. Discuss Python concurrency models such as asyncio or multiprocessing for efficient parsing. Address storage strategies combining hot paths for real-time monitoring and cold storage for offline analytics. Incorporate mechanisms for backpressure handling and data degradation during intermittent network connectivity.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "company-fit",
+            "prompt": "Given that Acme Robotics relies heavily on Python for our warehouse robot perception and navigation software, can you share an example of how you ensure Python codebases remain robust, maintainable, and thoroughly tested as they scale?",
+            "answer_outline": "Discusses strategies for comprehensive unit and integration testing in Python using tools like pytest. Mentions code quality practices like type hints, linters, and CI/CD pipelines. Relates the approach to maintaining reliable software in a distributed team environment.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Acme Robotics operates as a distributed team across three continents while shipping software updates weekly. How do you manage asynchronous communication, code reviews, and alignment when working across different time zones?",
+            "answer_outline": "Emphasizes proactive documentation and clear written communication. Describes effective async code review practices and unblocking teammates. Shows adaptability to fast-paced, weekly release cycles.",
+            "difficulty": 1,
+            "state": "generated"
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "What specifically excites you about applying your software engineering skills to warehouse robotics and perception systems at Acme Robotics compared to other domains?",
+            "answer_outline": "Connects personal career motivations to robotics and autonomous systems. Demonstrates an understanding of unique reliability challenges in physical robotics. Shows genuine enthusiasm for Acme Robotics' mission and distributed culture.",
+            "difficulty": 1,
+            "state": "generated"
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What is the primary programming language required?",
+            "back": "Python",
+            "requirement_ids": [
+              "r1"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          }
+        ],
+        "schedule": {
+          "days_available": 1,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Company fit & culture & System design",
+              "question_ids": [
+                "q2",
+                "q1",
+                "q3",
+                "q4",
+                "q5"
+              ],
+              "minutes": 120
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-04-unreachable-company",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Localhost",
+          "company_url": "http://localhost:9999/does-not-exist",
+          "role": "Data Engineer",
+          "location": "",
+          "jd_chars": 350,
+          "researched_at": "2026-09-10T12:29:50.478Z",
+          "pages_used": []
+        },
+        "company_brief": {
+          "summary": "No company information could be retrieved from the provided URL.",
+          "what_they_do": "Unknown - the company website was unreachable during research.",
+          "sources": [],
+          "state": "generated"
+        },
+        "role": {
+          "title": "Data Engineer",
+          "seniority": "mid-level",
+          "responsibilities": [
+            "Build and maintain analytics pipelines",
+            "Work with SQL and a modern data warehouse such as Snowflake, BigQuery, or Redshift",
+            "Use Airflow or a similar orchestrator",
+            "Perform SQL performance-tuning",
+            "Utilize dbt (nice to have)",
+            "Work with streaming pipelines using Kafka (nice to have)"
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "3+ years with SQL and a modern data warehouse (Snowflake/BigQuery/Redshift)",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "Experience with Airflow or a similar orchestrator",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "Strong SQL performance-tuning skills",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r4",
+              "text": "dbt experience",
+              "kind": "technical",
+              "priority": "nice"
+            },
+            {
+              "id": "r5",
+              "text": "Experience with streaming pipelines (Kafka)",
+              "kind": "technical",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1",
+              "r3"
+            ],
+            "category": "technical",
+            "prompt": "Describe a time when you optimized a slow-running query in a modern data warehouse like Snowflake or BigQuery. What was the root cause, and what specific steps did you take to improve its performance?",
+            "answer_outline": "Identified the bottleneck such as full table scans or poor clustering. Applied mitigation strategies like partitioning, modifying clustering keys, or rewriting subqueries. Measured the performance improvement in execution time and resource consumption.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "How do you handle task failures and retries within an Apache Airflow DAG, and how do you manage idempotency in your data pipelines so they can safely re-run?",
+            "answer_outline": "Configured retry parameters, SLAs, and alerting mechanisms. Designed tasks to be idempotent using upserts or overwrite partitions. Used Airflow clear and backfill commands safely.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "technical",
+            "prompt": "What are the primary benefits of using dbt for data transformation in a data warehouse, and how do you structure your models from staging to marts?",
+            "answer_outline": "Benefits include version control, modular SQL, automated documentation, and built-in testing. Staging models clean raw data, intermediate models handle joins, and marts provide business-ready aggregates.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r5"
+            ],
+            "category": "technical",
+            "prompt": "Explain the architectural differences between batch processing and streaming pipelines using Kafka. What are the key trade-offs in terms of latency, complexity, and exactly-once semantics?",
+            "answer_outline": "Batch processes data at scheduled intervals while streaming handles events continuously with lower latency. Kafka introduces higher operational complexity requiring careful management of consumer groups and offset commits to achieve exactly-once semantics.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r1",
+              "r3"
+            ],
+            "category": "system-design",
+            "prompt": "How would you approach diagnosing and optimizing a slow-running analytical query in a columnar data warehouse like Snowflake or BigQuery?",
+            "answer_outline": "Analyze the query execution plan (EXPLAIN) to identify bottlenecks such as full table scans or expensive shuffles. Leverage proper clustering keys or partitioning strategies to minimize scanned data volume. Optimize joins, avoid unnecessary subqueries, and ensure selective filters are applied early.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "Design a resilient DAG in Apache Airflow that ingests data from a third-party API, loads it into a staging table, and runs transformations. How do you handle transient network failures and task retries?",
+            "answer_outline": "Configure task-level retry parameters, retry intervals, and exponential backoff. Implement idempotency in the loading and transformation steps so re-runs do not duplicate data. Utilize SLAs, alerting mechanisms, and sensor tasks to monitor upstream dependencies.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "system-design",
+            "prompt": "How does dbt (data build tool) fit into a modern analytics engineering workflow, and how do you manage dependencies and incremental models within it?",
+            "answer_outline": "dbt handles the transformation layer in the data warehouse using modular SQL and version control. Dependencies are managed implicitly via Jinja ref functions, which build the Directed Acyclic Graph. Incremental models are used to append or merge only new records, reducing compute costs.",
+            "difficulty": 2,
+            "state": "generated"
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What is the required duration of experience with SQL and a modern data warehouse?",
+            "back": "3+ years with SQL and a modern data warehouse (Snowflake/BigQuery/Redshift).",
+            "requirement_ids": [
+              "r1"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f2",
+            "front": "What orchestrator experience is required for the role?",
+            "back": "Experience with Airflow or a similar orchestrator.",
+            "requirement_ids": [
+              "r2"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f3",
+            "front": "What specific SQL skill is emphasized as necessary?",
+            "back": "Strong SQL performance-tuning skills.",
+            "requirement_ids": [
+              "r3"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f4",
+            "front": "What is a nice-to-have data transformation tool experience?",
+            "back": "dbt experience.",
+            "requirement_ids": [
+              "r4"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f5",
+            "front": "What experience with streaming pipelines is considered a nice-to-have?",
+            "back": "Experience with streaming pipelines such as Kafka.",
+            "requirement_ids": [
+              "r5"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          }
+        ],
+        "schedule": {
+          "days_available": 7,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q1"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 2,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q2"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 3,
+              "focus": "System design",
+              "question_ids": [
+                "q5"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 4,
+              "focus": "System design",
+              "question_ids": [
+                "q6"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 5,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q4"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 6,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q3"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 7,
+              "focus": "System design",
+              "question_ids": [
+                "q7"
+              ],
+              "minutes": 40
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "case-05-staff",
+      "status": "ok",
+      "kit": {
+        "source": {
+          "company": "Culture & Handbook",
+          "company_url": "http://localhost:8099/culture",
+          "role": "Staff Software Engineer - Robotics Platform",
+          "location": "",
+          "jd_chars": 770,
+          "researched_at": "2026-09-10T12:32:39.637Z",
+          "pages_used": [
+            "http://localhost:8099/culture"
+          ]
+        },
+        "company_brief": {
+          "summary": "Acme Robotics operates as a distributed team that emphasizes small autonomous teams, asynchronous communication, and the use of decision documents for major changes. The available information about the company's culture and operations is relatively sparse.",
+          "what_they_do": "Acme Robotics works in the field of robotics, though specific products or business details are not provided in the company culture source.",
+          "sources": [
+            "http://localhost:8099/culture"
+          ],
+          "state": "generated"
+        },
+        "role": {
+          "title": "Staff Software Engineer - Robotics Platform",
+          "seniority": "staff",
+          "responsibilities": [
+            "Lead the technical direction of the robotics coordination platform",
+            "Design systems at scale with focus on distributed systems and real-time coordination",
+            "Mentor senior engineers and drive cross-team technical decisions",
+            "Write design docs and lead technical reviews"
+          ],
+          "requirements": [
+            {
+              "id": "r1",
+              "text": "8+ years of software engineering experience, including designing systems at scale",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r2",
+              "text": "Deep experience with distributed systems and real-time coordination (e.g. robot fleets, IoT, or similar)",
+              "kind": "technical",
+              "priority": "must"
+            },
+            {
+              "id": "r3",
+              "text": "Track record of mentoring senior engineers and driving cross-team technical decisions",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r4",
+              "text": "Excellent written communication; comfortable writing design docs and leading technical reviews",
+              "kind": "behavioural",
+              "priority": "must"
+            },
+            {
+              "id": "r5",
+              "text": "Experience in robotics, logistics, or another physical-world-adjacent domain",
+              "kind": "domain",
+              "priority": "nice"
+            },
+            {
+              "id": "r6",
+              "text": "Experience with ROS or similar robotics middleware",
+              "kind": "technical",
+              "priority": "nice"
+            }
+          ]
+        },
+        "questions": [
+          {
+            "id": "q1",
+            "requirement_ids": [
+              "r1"
+            ],
+            "category": "technical",
+            "prompt": "Describe a large-scale distributed system you architected, focusing on how you managed system-wide scalability and failure domains.",
+            "answer_outline": "Discusses the scale of the system and throughput metrics. Details architectural decisions made to isolate failure domains and prevent cascading failures. Explains capacity planning and data partitioning strategies.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q2",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "technical",
+            "prompt": "How would you design a real-time state synchronization and coordination pipeline for a distributed fleet of devices operating over unreliable network links?",
+            "answer_outline": "Proposes a protocol or architecture for handling intermittent connectivity and latency. Addresses state conflict resolution and eventual consistency models. Explains local fallback mechanisms for disconnected operations.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q3",
+            "requirement_ids": [
+              "r6"
+            ],
+            "category": "technical",
+            "prompt": "Compare ROS or similar robotics middleware with a custom pub-sub message broker for production fleet management. What are the key limitations in production?",
+            "answer_outline": "Analyzes the strengths and weaknesses of ROS message passing in wide-area networks. Discusses security, discovery mechanisms, and serialization overhead. Outlines mitigation strategies or alternative middleware choices for scaling beyond a single local network.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q4",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time you mentored a senior engineer to help them grow into a technical leader. What specific approach did you take, and what was the outcome?",
+            "answer_outline": "Identified specific growth areas for the senior engineer. Provided opportunities for them to lead technical decisions. Offered constructive feedback and coaching. Observed measurable improvement in their autonomy and leadership.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q5",
+            "requirement_ids": [
+              "r3"
+            ],
+            "category": "behavioural",
+            "prompt": "Describe a situation where you had to drive a complex technical decision across multiple teams with competing priorities. How did you build consensus and reach a resolution?",
+            "answer_outline": "Engaged stakeholders early across different teams. Facilitated discussions to align on common goals. Weighed technical trade-offs objectively. Secured formal buy-in and successfully executed the decision.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q6",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Tell me about a time when your written design document faced significant pushback or critical feedback during a technical review. How did you handle the critique and revise your proposal?",
+            "answer_outline": "Listened openly to technical concerns and feedback. Clarified ambiguous sections and updated the design doc. Collaborated with reviewers to find better alternatives. Maintained clear async communication throughout the revision process.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q7",
+            "requirement_ids": [
+              "r4"
+            ],
+            "category": "behavioural",
+            "prompt": "Can you share an example of a technical decision or system architecture that you successfully communicated entirely through asynchronous writing in a distributed team? How did you ensure clarity and alignment?",
+            "answer_outline": "Structured the written document for easy asynchronous reading. Anticipated questions and addressed edge cases preemptively. Used clear channels and tracked feedback systematically to drive alignment.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q8",
+            "requirement_ids": [
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "Design a real-time fleet management and coordination system for a large-scale network of autonomous mobile robots operating in a shared warehouse. How do you handle network partitions, command latency, and distributed state consistency?",
+            "answer_outline": "Propose a hybrid architecture with localized edge decision-making and a centralized cloud coordinator for global state. Address split-brain scenarios and conflict resolution when robots lose connectivity. Discuss real-time telemetry ingestion pipelines and handling backpressure during peak loads.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q9",
+            "requirement_ids": [
+              "r1",
+              "r2"
+            ],
+            "category": "system-design",
+            "prompt": "How would you design a scalable telemetry and event-ingestion pipeline capable of streaming high-frequency sensor data from thousands of distributed physical assets concurrently?",
+            "answer_outline": "Use a distributed streaming platform like Kafka or Pulsar for decoupled ingestion. Design data ingestion layers with horizontal scaling and backpressure management. Incorporate tiered storage strategies for hot real-time telemetry versus cold analytical data.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q10",
+            "requirement_ids": [
+              "r5",
+              "r6"
+            ],
+            "category": "system-design",
+            "prompt": "When integrating high-level cloud coordination systems with low-level robotics middleware like ROS2, what architectural patterns do you use to bridge the gap between asynchronous cloud APIs and deterministic, real-time robot nodes?",
+            "answer_outline": "Define a clean abstraction layer or gateway proxy to translate cloud commands into middleware-compatible messages. Address deterministic safety constraints versus asynchronous cloud control loops. Explain how to handle version mismatches and telemetry serialization over constrained or intermittent wireless networks.",
+            "difficulty": 3,
+            "state": "generated"
+          },
+          {
+            "id": "q11",
+            "requirement_ids": [],
+            "category": "company-fit",
+            "prompt": "Acme Robotics operates with small autonomous teams and relies heavily on asynchronous communication and written decision documents. Can you share an experience where you successfully drove a major technical initiative or system design using written RFCs or decision docs in a distributed team environment?",
+            "answer_outline": "Describes a specific technical initiative or system design driven by a written proposal. Explains how asynchronous communication and documentation were used to align stakeholders. Reflects an understanding of working effectively in autonomous, distributed engineering environments.",
+            "difficulty": 2,
+            "state": "generated"
+          },
+          {
+            "id": "q12",
+            "requirement_ids": [
+              "r5",
+              "r6"
+            ],
+            "category": "company-fit",
+            "prompt": "Given Acme Robotics' focus on the robotics domain, how has your past experience in physical-world-adjacent domains or robotics middleware like ROS shaped your approach to building scalable platform software?",
+            "answer_outline": "Connects background in robotics, logistics, or physical-world domains to platform engineering. Discusses familiarity with ROS or similar middleware and its constraints. Highlights how real-world physical constraints influence software architecture decisions.",
+            "difficulty": 2,
+            "state": "generated"
+          }
+        ],
+        "flashcards": [
+          {
+            "id": "f1",
+            "front": "What is the expected years of software engineering experience for this role?",
+            "back": "8+ years of software engineering experience, including designing systems at scale.",
+            "requirement_ids": [
+              "r1"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f2",
+            "front": "What type of distributed systems experience is required?",
+            "back": "Deep experience with distributed systems and real-time coordination (e.g., robot fleets, IoT, or similar).",
+            "requirement_ids": [
+              "r2"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f3",
+            "front": "What leadership and mentoring capabilities must the candidate demonstrate?",
+            "back": "A track record of mentoring senior engineers and driving cross-team technical decisions.",
+            "requirement_ids": [
+              "r3"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f4",
+            "front": "What communication skills are emphasized for technical alignment?",
+            "back": "Excellent written communication; comfortable writing design docs and leading technical reviews.",
+            "requirement_ids": [
+              "r4"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f5",
+            "front": "What domain experience is considered nice to have?",
+            "back": "Experience in robotics, logistics, or another physical-world-adjacent domain.",
+            "requirement_ids": [
+              "r5"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          },
+          {
+            "id": "f6",
+            "front": "What specific middleware experience is listed as a nice-to-have technical skill?",
+            "back": "Experience with ROS or similar robotics middleware.",
+            "requirement_ids": [
+              "r6"
+            ],
+            "state": "generated",
+            "practice": {
+              "confidence": null,
+              "reviewCount": 0,
+              "lastReviewedAt": null
+            }
+          }
+        ],
+        "schedule": {
+          "days_available": 14,
+          "days": [
+            {
+              "day": 1,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q1"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 2,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q2"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 3,
+              "focus": "Behavioural readiness",
+              "question_ids": [
+                "q5"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 4,
+              "focus": "System design",
+              "question_ids": [
+                "q8"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 5,
+              "focus": "Behavioural readiness",
+              "question_ids": [
+                "q4"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 6,
+              "focus": "Behavioural readiness",
+              "question_ids": [
+                "q6"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 7,
+              "focus": "Behavioural readiness",
+              "question_ids": [
+                "q7"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 8,
+              "focus": "System design",
+              "question_ids": [
+                "q9"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 9,
+              "focus": "System design",
+              "question_ids": [
+                "q10"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 10,
+              "focus": "Technical fundamentals",
+              "question_ids": [
+                "q3"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 11,
+              "focus": "Company fit & culture",
+              "question_ids": [
+                "q11"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 12,
+              "focus": "Company fit & culture",
+              "question_ids": [
+                "q12"
+              ],
+              "minutes": 40
+            },
+            {
+              "day": 13,
+              "focus": "Review & practice: reinforce weaker areas",
+              "question_ids": [
+                "q1",
+                "q2",
+                "q5"
+              ],
+              "minutes": 60
+            },
+            {
+              "day": 14,
+              "focus": "Review & practice: reinforce weaker areas",
+              "question_ids": [
+                "q8",
+                "q4",
+                "q6"
+              ],
+              "minutes": 60
+            }
+          ]
+        },
+        "coverage": {
+          "uncovered_requirement_ids": [],
+          "passes": 1
+        }
+      },
+      "error": null
+    }
+  ]
+}
