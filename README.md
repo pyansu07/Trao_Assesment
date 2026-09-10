@@ -562,7 +562,7 @@ the evaluator/live-generation paths actually call it).
 
 | Variable | Purpose |
 |---|---|
-| `NEXT_PUBLIC_API_URL` | Base URL of the backend API |
+| `NEXT_PUBLIC_BACKEND_URL` | Base URL of the backend API |
 
 ## 25. Deployment
 
@@ -584,7 +584,7 @@ deploy.
 
 **Frontend** (Vercel — zero config for Next.js):
 - Import the repo, set the project root to `frontend/`, set
-  `NEXT_PUBLIC_API_URL` to the deployed backend URL.
+  `NEXT_PUBLIC_BACKEND_URL` to the deployed backend URL.
 - No `vercel.json` needed for a standard Next.js App Router app.
 
 **Database**: any MongoDB Atlas free-tier cluster works — set
