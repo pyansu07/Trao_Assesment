@@ -3,7 +3,11 @@ dist/
 build/
 .next/
 out/
-coverage/
+# Test-coverage report output only (not backend/src/services/coverage/,
+# which is real source code - an unqualified "coverage/" pattern would also
+# match that folder and silently exclude it from git).
+/backend/coverage/
+/frontend/coverage/
 *.log
 .env
 .env.local
